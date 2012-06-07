@@ -21,6 +21,16 @@ function isHostName(hostname)
     return hostnames[hostname];
 }
     
+function Spout() {    
+    this.prepare = function(controller) {
+        this.controller = controller;
+    }
+    
+    this.emitMessage = function(msg) {
+        this.controller.emit(msg);
+    }
+}
+    
 function Resolver() {
     this.visited = {};
     
@@ -103,6 +113,7 @@ function Harvester() {
 
 // Objects
 
+var spout = new Spout();
 var downloader = new Downloader();
 var resolver = new Resolver();
 var harvester = new Harvester();
@@ -111,7 +122,8 @@ var harvester = new Harvester();
 
 var builder = ss.createTopologyBuilder();
 
-builder.setBolt("downloader", downloader).shuffleGrouping("resolver");
+builder.setSpout("spout", spout);
+builder.setBolt("downloader", downloader).shuffleGrouping("resolver").shuffleGrouping("spout");
 builder.setBolt("resolver", resolver).shuffleGrouping("harvester");
 builder.setBolt("harvester", harvester).shuffleGrouping("downloader");
 
@@ -121,6 +133,6 @@ var topology = builder.createTopology();
 
 process.argv.forEach(function(arg) {
     if (arg.indexOf("http:")==0)
-        downloader.execute(arg);
+        spout.emitMessage(arg);
 });
 
