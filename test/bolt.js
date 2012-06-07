@@ -18,7 +18,11 @@ exports['Set Shuffle Grouping'] = function(test) {
     
     var result = builder.setBolt("mybolt", bolt);
     result.shuffleGrouping("myspout");
-    test.equal(result.getGroupingName(), "myspout");
+    var groupings = result.getGroupings();
+    test.ok(groupings);
+    test.ok(Array.isArray(groupings));
+    test.equal(groupings.length, 1);
+    test.equal(groupings[0], "myspout");
     
 	test.done();
 }
