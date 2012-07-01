@@ -1,6 +1,6 @@
 # Web Crawler Sample
 
-A broadcast sample, one server, many clients. Each client repeats a message.
+A web crawler sample using a local topology.
 
 ## Usage
 
