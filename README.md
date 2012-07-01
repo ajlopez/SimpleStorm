@@ -1,9 +1,10 @@
 # SimpleStorm
 
-Simple Storm-like distributed application, implementation, for Node.js. Work in Progress.
+Simple Storm-like distributed application, implementation, for Node.js.
 See
-https://github.com/nathanmarz/storm
-https://github.com/nathanmarz/storm/wiki/Tutorial
+
+- https://github.com/nathanmarz/storm
+- https://github.com/nathanmarz/storm/wiki/Tutorial
 
 ## Installation
 
