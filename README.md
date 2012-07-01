@@ -22,7 +22,56 @@ var simplestorm = require('simplestorm');
 
 ## Usage
 
-TBD
+You have Spouts (message sources) and Bolts (message processor). An Spout should have a `prepare` function.
+```js
+function Spout() {    
+    this.prepare = function(controller) {
+        this.controller = controller;
+    }
+    
+    this.emitMessage = function(msg) {
+        this.controller.emit(msg);
+    }
+}
+```
+An spout emit message via its controller, in any of its methods.
+
+The `prepare` function receives a controller, that can be used to emit messages.
+
+A Bolt has `prepare` and `execute` methods:
+```js
+function MyBolt() {    
+    this.prepare = function(controller) {
+        this.controller = controller;
+    }
+    
+    this.execute = function(msg) {
+		// Message process
+		// and emit new message(s)
+		this.controller.emit(newmsg);
+	}
+}
+```
+There is a topology builder:
+```js
+// Objects
+
+var spout = new Spout();
+var downloader = new Downloader();
+var resolver = new Resolver();
+var harvester = new Harvester();
+
+// Setting Builder
+
+var builder = ss.createTopologyBuilder();
+
+builder.setSpout("spout", spout);
+builder.setBolt("downloader", downloader).shuffleGrouping("resolver").shuffleGrouping("spout");
+builder.setBolt("resolver", resolver).shuffleGrouping("harvester");
+builder.setBolt("harvester", harvester).shuffleGrouping("downloader");
+
+var topology = builder.createTopology();
+```
 
 ## Development
 
@@ -35,7 +84,11 @@ npm test
 
 ## Samples
 
-TBD
+[Web Crawler](https://github.com/ajlopez/SimpleStorm/tree/master/samples/WebCrawler) sample shows
+a local topology running a web crawler.
+
+[Distributed Web Crawler](https://github.com/ajlopez/SimpleStorm/tree/master/samples/DistributedWebCrawler) is a central server using
+queues and many SimpleStorm topologies running in nodes.
 
 ## Contribution
 
