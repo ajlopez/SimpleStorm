@@ -35,18 +35,19 @@ function Spout(queue) {
     
     this.start = function() {
         console.log('spout started');
-        process.nextTick(function() {
-            sq.remoteConsume(queue, function(err, msg) {
-                if (err) {
-                    console.log(err);
-                    return false;
-                }
-                
-                console.log('Received ' + msg.payload);
-                self.emitMessage(msg.payload);
-                return true;
-            });
-        });
+
+        function processMessage(err, msg) {
+            if (err)
+                console.log(err);
+            else {
+                console.log('Received ' + msg);
+                self.emitMessage(msg);
+            }
+
+            queue.getMessage(processMessage);
+        }
+
+        queue.getMessage(processMessage);
     }
 }
     
@@ -58,7 +59,7 @@ function Resolver(queue) {
     }
     
     this.execute = function(link) {
-        queue.putMessage(new sq.Message(link));
+        queue.putMessage(link);
     }
 }
 

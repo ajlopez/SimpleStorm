@@ -3,6 +3,13 @@
 A distributed web crawler sample. A central server has queues with links to process. The topology can be
 manually launched in many nodes.
 
+## Install
+Execute
+```
+npm install
+```
+to install the dependencies.
+
 ## Usage
 Launch the server
 ```

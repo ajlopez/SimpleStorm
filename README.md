@@ -84,15 +84,15 @@ npm test
 
 ## Samples
 
-[Web Crawler](https://github.com/ajlopez/SimpleStorm/tree/master/samples/WebCrawler) sample shows
+- [Web Crawler](https://github.com/ajlopez/SimpleStorm/tree/master/samples/WebCrawler) sample shows
 a local topology running a web crawler.
-
-[Distributed Web Crawler](https://github.com/ajlopez/SimpleStorm/tree/master/samples/DistributedWebCrawler) is a central server using
+- [Distributed Web Crawler](https://github.com/ajlopez/SimpleStorm/tree/master/samples/DistributedWebCrawler) is a central server using
 queues and many SimpleStorm topologies running in nodes.
 
 ## Versions
 
 - 0.0.1: Published.
+- 0.0.2: Under development, in master. Using SimpleQueue 0.0.2.
 
 ## Contribution
 

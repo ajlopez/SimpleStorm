@@ -37,15 +37,20 @@ function Resolver(inputqueue, outputqueue) {
             return;
 
         this.visited[link] = true;
-        outputqueue.putMessage(new sq.Message(link));
+        outputqueue.putMessage(link);
     }
     
     this.start = function() {
         process.nextTick(function() {
-            sq.consume(inputqueue, function(msg) {
-                self.process(msg.payload);
-                return true;
-            });
+            function processMessage(err, msg) {
+                if (err)
+                    console.log(err);
+                else
+                    self.process(msg);
+                inputqueue.getMessage(processMessage);
+            }
+
+            inputqueue.getMessage(processMessage);
         });
     }
     
@@ -58,7 +63,7 @@ function Resolver(inputqueue, outputqueue) {
 
 // Queues
 
-var queueserver = new sq.QueueServer();
+var queueserver = sq.createQueueServer();
 var resolverqueue = queueserver.createQueue('qresolver');
 var linksqueue = queueserver.createQueue('qlinks');
 
@@ -76,7 +81,7 @@ resolver.start();
 process.argv.forEach(function(arg) {
     if (arg.indexOf("http:")==0) {
         resolver.registerHost(arg);
-        linksqueue.putMessage(new sq.Message(arg));
+        linksqueue.putMessage(arg);
     }
 });
 
