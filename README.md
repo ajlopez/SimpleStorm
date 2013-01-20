@@ -90,6 +90,10 @@ a local topology running a web crawler.
 [Distributed Web Crawler](https://github.com/ajlopez/SimpleStorm/tree/master/samples/DistributedWebCrawler) is a central server using
 queues and many SimpleStorm topologies running in nodes.
 
+## Versions
+
+- 0.0.1: Published.
+
 ## Contribution
 
 Feel free to [file issues](https://github.com/ajlopez/SimpleStorm) and submit

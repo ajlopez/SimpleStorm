@@ -1,7 +1,7 @@
 { "name": "simplestorm"
 , "description": "Simple Storm-like distributed application, Work in Progress"
 , "keywords": [ "messaging", "distributed", "storm", "nodejs", "javascript" ]
-, "version": "0.0.1alpha"
+, "version": "0.0.1"
 , "author": "Angel 'Java' Lopez <webmaster@ajlopez.com> (http://www.ajlopez.com)"
 , "repository": { "type": "git", "url": "git://github.com/ajlopez/SimpleStorm.git" }
 , "main": "./lib/simplestorm.js"
@@ -10,9 +10,9 @@
     "test": "nodeunit test"
   }
 , "dependencies": {
+    "simplequeue": "0.0.1"
   }
 , "devDependencies": {
-    "simplequeue": "*",
     "nodeunit": ">= 0.7.4"
   }
 }
