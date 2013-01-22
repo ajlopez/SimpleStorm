@@ -92,7 +92,7 @@ queues and many SimpleStorm topologies running in nodes.
 ## Versions
 
 - 0.0.1: Published.
-- 0.0.2: Under development, in master. Using SimpleQueue 0.0.2 for Distributed Web Crawler.
+- 0.0.2: Published. Using SimpleQueue 0.0.2 for Distributed Web Crawler.
 
 ## Contribution
 
