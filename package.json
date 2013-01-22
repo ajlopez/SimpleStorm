@@ -1,7 +1,7 @@
 { "name": "simplestorm"
 , "description": "Simple Storm-like distributed application, Work in Progress"
 , "keywords": [ "messaging", "distributed", "storm", "nodejs", "javascript" ]
-, "version": "0.0.2"
+, "version": "0.0.3"
 , "author": "Angel 'Java' Lopez <webmaster@ajlopez.com> (http://www.ajlopez.com)"
 , "repository": { "type": "git", "url": "git://github.com/ajlopez/SimpleStorm.git" }
 , "main": "./lib/simplestorm.js"

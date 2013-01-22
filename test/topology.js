@@ -24,37 +24,23 @@ exports['Create and Run Simple Topology'] = function(test)
 {
 	var builder = ss.createTopologyBuilder();
     var spout = new Spout();
+    spout.start = function (ctx) { ctx.emit("foo"); };
     builder.setSpout("spout", spout);
     builder.setBolt("bolt", new Bolt(test, "foo")).shuffleGrouping("spout");
 	var topology = builder.createTopology();
-    test.expect(3);
+    test.expect(4);
     test.ok(topology);
-    spout.emitMessage("foo");
+    topology.start();
 }
 
 function Spout() {
-    var controller;
-    
-    this.prepare = function(contr) {
-        controller = contr;
-    }
-    
-    this.emitMessage = function(msg)
-    {
-        controller.emit(msg);
-    }
 }
 
 function Bolt(test, expected) {
-    var controller;
-    
-    this.prepare = function(contr) {
-        controller = contr;
-    }
-    
-    this.execute = function(msg) {
+    this.process = function(msg, context) {
         test.ok(msg);
         test.equal(msg, expected);
+        test.ok(context);
         test.done();
     }
 }

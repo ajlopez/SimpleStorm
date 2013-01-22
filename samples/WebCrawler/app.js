@@ -22,23 +22,18 @@ function isHostName(hostname)
 }
     
 function Spout() {    
-    this.prepare = function(controller) {
-        this.controller = controller;
-    }
-    
-    this.emitMessage = function(msg) {
-        this.controller.emit(msg);
+    this.start = function(context) {
+        process.argv.forEach(function(arg) {
+            if (arg.indexOf("http:")==0)
+                context.emit(arg);
+        });
     }
 }
     
 function Resolver() {
     this.visited = {};
     
-    this.prepare = function(controller) {
-        this.controller = controller;
-    }
-    
-    this.execute = function(link) {
+    this.process = function(link, context) {
         var urldata = url.parse(link);
 
         if (!isHostName(urldata.hostname))
@@ -48,16 +43,12 @@ function Resolver() {
             return;
 
         this.visited[link] = true;
-        this.controller.emit(link);
+        context.emit(link);
     }
 }
 
 function Downloader() {    
-    this.prepare = function(controller) {
-        this.controller = controller;
-    }
-    
-    this.execute = function(link) {
+    this.process = function(link, context) {
         var downloader = this;
         var urldata = url.parse(link);
         
@@ -74,7 +65,7 @@ function Downloader() {
                 console.log('Url: ' + link);
                 res.setEncoding('utf8');
                 res.on('data', function(data) {
-                    downloader.controller.emit(data);
+                    context.emit(data);
                 });
            }).on('error', function(e) {
                 console.log('Url: ' + link);
@@ -87,18 +78,14 @@ var match1 = /href=\s*"([^&"]*)"/i;
 var match2= /href=\s*'([^&']*)'/i;
 
 function Harvester() {
-    this.prepare = function(controller) {
-        this.controller = controller;
-    }
-    
-    this.execute = function(data) {
+    this.process = function(data, context) {
         var harvester = this;
         var links = match1.exec(data);
 
         if (links)
             links.forEach(function(link) { 
                 if (link.indexOf('http:') == 0)
-                    harvester.controller.emit(link);
+                    context.emit(link);
             });
 
         links = match2.exec(data);
@@ -106,7 +93,7 @@ function Harvester() {
         if (links)
             links.forEach(function(link) { 
                 if (link.indexOf('http:') == 0)
-                    harvester.controller.emit(link);
+                    context.emit(link);
             });
     }
 }
@@ -129,10 +116,6 @@ builder.setBolt("harvester", harvester).shuffleGrouping("downloader");
 
 var topology = builder.createTopology();
 
+topology.start();
 // Process arguments
-
-process.argv.forEach(function(arg) {
-    if (arg.indexOf("http:")==0)
-        spout.emitMessage(arg);
-});
 
