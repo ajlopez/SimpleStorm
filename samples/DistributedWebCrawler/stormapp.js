@@ -25,15 +25,7 @@ function isHostName(hostname)
 function Spout(queue) {    
     var self = this;
     
-    this.prepare = function(controller) {
-        this.controller = controller;
-    }
-    
-    this.emitMessage = function(msg) {
-        this.controller.emit(msg);
-    }
-    
-    this.start = function() {
+    this.start = function(context) {
         console.log('spout started');
 
         function processMessage(err, msg) {
@@ -41,7 +33,7 @@ function Spout(queue) {
                 console.log(err);
             else {
                 console.log('Received ' + msg);
-                self.emitMessage(msg);
+                context.emit(msg);
             }
 
             queue.getMessage(processMessage);
@@ -54,22 +46,13 @@ function Spout(queue) {
 function Resolver(queue) {
     this.visited = {};
     
-    this.prepare = function(controller) {
-        this.controller = controller;
-    }
-    
-    this.execute = function(link) {
+    this.process = function(link, context) {
         queue.putMessage(link);
     }
 }
 
 function Downloader() {    
-    this.prepare = function(controller) {
-        this.controller = controller;
-    }
-    
-    this.execute = function(link) {
-        var downloader = this;
+    this.process = function(link, context) {
         var urldata = url.parse(link);
         
         registerHostName(urldata.hostname);
@@ -85,7 +68,7 @@ function Downloader() {
                 console.log('Url: ' + link);
                 res.setEncoding('utf8');
                 res.on('data', function(data) {
-                    downloader.controller.emit(data);
+                    context.emit(data);
                 });
            }).on('error', function(e) {
                 console.log('Url: ' + link);
@@ -98,18 +81,13 @@ var match1 = /href=\s*"([^&"]*)"/i;
 var match2= /href=\s*'([^&']*)'/i;
 
 function Harvester() {
-    this.prepare = function(controller) {
-        this.controller = controller;
-    }
-    
-    this.execute = function(data) {
-        var harvester = this;
+    this.process = function(data, context) {
         var links = match1.exec(data);
 
         if (links)
             links.forEach(function(link) { 
                 if (link.indexOf('http:') == 0)
-                    harvester.controller.emit(link);
+                    context.emit(link);
             });
 
         links = match2.exec(data);
@@ -117,7 +95,7 @@ function Harvester() {
         if (links)
             links.forEach(function(link) { 
                 if (link.indexOf('http:') == 0)
-                    harvester.controller.emit(link);
+                    context.emit(link);
             });
     }
 }
@@ -163,7 +141,7 @@ qclient.on('remote', function(remote) {
 
             var topology = builder.createTopology();
 
-            spout.start();
+            topology.start();
         });
     });
 });
