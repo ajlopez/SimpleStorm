@@ -22,33 +22,25 @@ var simplestorm = require('simplestorm');
 
 ## Usage
 
-You have Spouts (message sources) and Bolts (message processor). An Spout should have a `prepare` function.
+You have Spouts (message sources) and Bolts (message processor). An Spout should have a `start` function.
 ```js
 function Spout() {    
-    this.prepare = function(controller) {
-        this.controller = controller;
-    }
-    
-    this.emitMessage = function(msg) {
-        this.controller.emit(msg);
+    this.start = function(context) {
+        // ...
+        context.emit(msg); // you can emit a message many times
+        // ....
     }
 }
 ```
 An spout emit message via its controller, in any of its methods.
 
-The `prepare` function receives a controller, that can be used to emit messages.
-
-A Bolt has `prepare` and `execute` methods:
+A Bolt has a `process` method:
 ```js
 function MyBolt() {    
-    this.prepare = function(controller) {
-        this.controller = controller;
-    }
-    
-    this.execute = function(msg) {
+    this.process = function(msg, context) {
 		// Message process
 		// and emit new message(s)
-		this.controller.emit(newmsg);
+		context.emit(newmsg);
 	}
 }
 ```
@@ -106,3 +98,4 @@ test cases, and ensure that `npm test` continues to pass.
 
 (Thanks to [JSON5](https://github.com/aseemk/json5) by [aseemk](https://github.com/aseemk). 
 This file is based on that project README.md).
+
