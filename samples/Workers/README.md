@@ -19,12 +19,15 @@ Example
 ```
 node server.js http://ajlopez.wordpress.com
 ```
+Server exposes a queue server using port 3000. It listens to topology workers at port 3001.
+
 Launch one or more clients
 ```
-node stormnode.js port [host:port  ...] 
+node stormnode.js port  
 ```
-The node starts to listen other nodes at `port`. The optional additional addresses refers to already running
-nodes.
+The node starts to listen other nodes at `port`. It communicates its address to the topology server
+listening at port 3001.
+
 
 
 

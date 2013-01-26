@@ -2,8 +2,7 @@
 var ss = require('../../'),
     sq = require('simplequeue'),
 	http = require('http'),
-    url = require('url'),
-    sm = require('simplemessages');
+    url = require('url');
     
 var hostnames = {};
 
@@ -161,20 +160,13 @@ qclient.on('remote', function(remote) {
             builder.setBolt("resolver", resolver).shuffleGrouping("harvester");
 
             var topology = builder.createTopology();
+            
+            topology.connectToServer(3001);
+            
+            if (port)
+                topology.listen(port);
 
             topology.start();
-            
-            var server = sm.createServer(function (channel) {
-                topology.registerWorker(channel, channel);
-            });
-            
-            server.listen(port);
-            
-            nodes.forEach(function (node) {
-                var client = sm.createClient(node.port, node.host, function() {
-                    topology.registerWorker(client, client);
-                });
-            });
         });
     });
 });

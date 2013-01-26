@@ -69,6 +69,11 @@ var server = sq.createRemoteServer(queueserver);
 
 server.listen(3000);
 
+// Topology server
+
+var tserver = ss.createTopologyServer();
+tserver.listen(3001);
+
 // Objects
 
 var resolver = new Resolver(resolverqueue, linksqueue);
