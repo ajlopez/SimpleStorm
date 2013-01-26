@@ -80,6 +80,8 @@ npm test
 a local topology running a web crawler.
 - [Distributed Web Crawler](https://github.com/ajlopez/SimpleStorm/tree/master/samples/DistributedWebCrawler) is a central server using
 queues and many SimpleStorm topologies running in nodes.
+- [Distributed Web Crawler with Server/Workers](https://github.com/ajlopez/SimpleStorm/tree/master/samples/Workers) A central topology
+server and many topologies running in worker processes.
 
 ## Versions
 
