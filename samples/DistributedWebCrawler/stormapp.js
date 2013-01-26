@@ -2,9 +2,7 @@
 var ss = require('../../'),
     sq = require('simplequeue'),
 	http = require('http'),
-    url = require('url'),
-    util = require('util'),
-    events = require('events');
+    url = require('url');
     
 var hostnames = {};
 
