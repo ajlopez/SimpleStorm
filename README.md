@@ -72,7 +72,7 @@ topology.start();
 
 Stop a topology (WIP):
 ```js
-topology.start();
+topology.stop();
 ```
 
 A topology worker can listen external messages, sent from other topology workers:
