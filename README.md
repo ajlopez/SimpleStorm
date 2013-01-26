@@ -118,7 +118,9 @@ server and many topologies running in worker processes.
 
 - 0.0.1: Published.
 - 0.0.2: Published. Using SimpleQueue 0.0.2 for Distributed Web Crawler.
-- 0.0.3: Under development, in master. Major internal/external refactor. Spout.start, Bold.process.
+- 0.0.3: Published. Major internal/external refactor. Spout.start, Bold.process.
+Topology.listen. Topology Server. Task message exchange between running worker processes (in different
+nodes). Workers sample.
 
 ## Contribution
 
