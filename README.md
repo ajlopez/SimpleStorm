@@ -65,6 +65,36 @@ builder.setBolt("harvester", harvester).shuffleGrouping("downloader");
 var topology = builder.createTopology();
 ```
 
+Start a topology:
+```js
+topology.start();
+```
+
+Stop a topology (WIP):
+```js
+topology.start();
+```
+
+A topology worker can listen external messages, sent from other topology workers:
+```js
+topology.listen(port);
+```
+
+If they are many topology workers, they can share its address using a central server. In a process,
+create a topology server:
+```js
+var tserver = ss.createTopologyServer();
+tserver.listen(port);
+```
+
+In each topology worker, connect to the topology server:
+```js
+topology.connectToServer(port, host);
+```
+
+When a topology worker connects to the central server, it sends its address. The server shares that address
+with the rest of the topology workers.
+
 ## Development
 
 ```
