@@ -1,0 +1,9 @@
+{
+  "name": "distributed-webcrawler-example",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "simplequeue": "0.0.2",
+	"simplemessages": "0.0.3"
+  }
+}
