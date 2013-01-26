@@ -93,7 +93,8 @@ topology.connectToServer(port, host);
 ```
 
 When a topology worker connects to the central server, it sends its address. The server shares that address
-with the rest of the topology workers.
+with the rest of the topology workers. See [Distributed Web Crawler with Server/Workers](https://github.com/ajlopez/SimpleStorm/tree/master/samples/Workers)
+for a running example.
 
 ## Development
 
