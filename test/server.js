@@ -68,6 +68,39 @@ exports['Public Topology connect to Server'] = function(test)
     }
 }
 
+exports['One Server and Two Connected Worker Topologies'] = function(test)
+{
+    test.expect(10 * 3 * 2);
+	var builder = ss.createTopologyBuilder();
+    var result = { sum: 0, total: 20 };
+    builder.setSpout("spout", new Spout(10, 1));
+    builder.setBolt("bolt", new Bolt(test, 1, result, done)).shuffleGrouping("spout");
+	
+    var topology = builder.createTopology();
+    var topology2 = builder.createTopology();
+    
+    var server = ss.createTopologyServer();
+    
+    server.listen(3000);
+    
+    topology.listen(3001);
+    topology2.listen(3002);
+    
+    topology.connectToServer(3000);
+    topology2.connectToServer(3000);
+
+    setTimeout(function () {
+        topology.start();
+        topology2.start();
+    }, 1000);
+    
+    function done() {
+        topology.stop();
+        topology2.stop();
+        server.close();
+    }
+}
+
 function Spout(n, msg) {
     this.start = function (ctx) {
         for (var k = 0; k < n; k++)
@@ -90,3 +123,4 @@ function Bolt(test, expected, result, done) {
         }
     }
 }
+

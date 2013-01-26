@@ -74,3 +74,4 @@ function Bolt(test, expected, result) {
             test.done();
     }
 }
+
