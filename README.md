@@ -121,6 +121,14 @@ server and many topologies running in worker processes.
 - 0.0.3: Published. Major internal/external refactor. Spout.start, Bold.process.
 Topology.listen. Topology Server. Task message exchange between running worker processes (in different
 nodes). Workers sample.
+- 0.0.4: Under develoopment, in master. To implement local ACK.
+
+## To Do
+
+- Implement local ack of message tree
+- Implement distributed ack
+- Use a queue that can replay a fail message
+- Adopt [MultiNodes](https://github.com/ajlopez/MultipleNodes)
 
 ## Contribution
 
