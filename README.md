@@ -121,7 +121,7 @@ server and many topologies running in worker processes.
 - 0.0.3: Published. Major internal/external refactor. Spout.start, Bold.process.
 Topology.listen. Topology Server. Task message exchange between running worker processes (in different
 nodes). Workers sample.
-- 0.0.4: Under develoopment, in master. To implement local ACK.
+- 0.0.4: Under develoopment, in master. To implement local and distributed ack.
 
 ## To Do
 
