@@ -3,6 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "simplequeue": "0.0.3"
+    "simplequeue": "0.0.4"
   }
 }

@@ -23,7 +23,7 @@ Server exposes a queue server using port 3000. It listens to topology workers at
 
 Launch one or more clients
 ```
-node stormnode.js port  
+node stormapp.js [port]
 ```
 The node starts to listen other nodes at `port`. It communicates its address to the topology server
 listening at port 3001.
