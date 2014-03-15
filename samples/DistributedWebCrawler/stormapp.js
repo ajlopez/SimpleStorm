@@ -75,26 +75,26 @@ function Downloader() {
     }
 }
 
-var match1 = /href=\s*"([^&"]*)"/i;
-var match2= /href=\s*'([^&']*)'/i;
+var match1 = /href=\s*"([^&"]*)"/ig;
+var match2= /href=\s*'([^&']*)'/ig;
 
 function Harvester() {
     this.process = function(data, context) {
-        var links = match1.exec(data);
+        var links;
+        
+        while ((links = match1.exec(data)) !== null) {
+            var link = links[1];
 
-        if (links)
-            links.forEach(function(link) { 
-                if (link.indexOf('http:') == 0)
-                    context.emit(link);
-            });
+            if (link.indexOf('http:') == 0)
+                context.emit(link);
+        };
 
-        links = match2.exec(data);
-
-        if (links)
-            links.forEach(function(link) { 
-                if (link.indexOf('http:') == 0)
-                    context.emit(link);
-            });
+        while ((links = match2.exec(data)) !== null) {
+            var link = links[1];
+                    
+            if (link.indexOf('http:') == 0)
+                context.emit(link);
+        };
     }
 }
 
